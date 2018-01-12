@@ -5,46 +5,38 @@
       "loopback/server/models",
       "../common/models",
       "./models"
-    ],
-    "mixins": [
-      "loopback/common/mixins",
-      "loopback/server/mixins",
-      "../common/mixins",
-      "./mixins"
     ]
   },
   "User": {
-    "dataSource": "regalaton"
+    "dataSource": "db",
+    "public": false
   },
   "AccessToken": {
-    "dataSource": "regalaton",
+    "dataSource": "db",
     "public": false
   },
   "ACL": {
-    "dataSource": "regalaton",
+    "dataSource": "db",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "regalaton",
-    "public": false,
-    "options": {
-      "strictObjectIDCoercion": true
-    }
-  },
-  "Role": {
-    "dataSource": "regalaton",
+    "dataSource": "db",
     "public": false
   },
-  "Regalo": {
-    "dataSource": "regalaton",
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "user": {
+    "dataSource": "db",
     "public": true
   },
-  "Donante": {
-    "dataSource": "regalaton",
-    "public": true
+  "team": {
+    "dataSource": "db",
+    "public": false
   },
-  "Receptor": {
-    "dataSource": "regalaton",
+  "project": {
+    "dataSource": "db",
     "public": true
   }
 }

@@ -2,15 +2,5 @@
   "db": {
     "name": "db",
     "connector": "memory"
-  },
-  "regalaton": {
-    "host": "localhost",
-    "port": 27017,
-    "url": "",
-    "database": "regalaton",
-    "password": "",
-    "name": "regalaton",
-    "user": "",
-    "connector": "mongodb"
   }
 }

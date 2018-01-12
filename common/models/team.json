@@ -1,28 +1,25 @@
 {
-  "name": "Donante",
-  "base": "User",
+  "name": "team",
+  "base": "PersistedModel",
   "idInjection": true,
-  "options": {
-    "validateUpsert": true
-  },
   "properties": {
-    "nombre": {
+    "ownerId": {
       "type": "string",
       "required": true
     },
-    "pais": {
+    "memberId": {
       "type": "string",
       "required": true
     }
   },
   "validations": [],
   "relations": {
-    "regalos": {
+    "members": {
       "type": "hasMany",
-      "model": "Regalo",
-      "foreignKey": ""
+      "model": "user",
+      "foreignKey": "memberId"
     }
   },
   "acls": [],
-  "methods": {}
+  "methods": []
 }

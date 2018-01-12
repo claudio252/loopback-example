@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>LoopBack Control de Acceso</title>
+  </head>
+  <body>
+  <h1>Startkicker<% if (typeof username !== 'undefined') { %> - Bienvenido <%=
+      username %><% } %></h1>
+    <table border=1 cellpadding=5>
+      <tr>
+        <th>Funcion</th>
+        <th>Descripcion</th>
+        <th>Endpoint</th>
+        <th>Permisos</th>
+        <th>Roles</th>
+        <th>Informacion</th>
+      </tr>
+      <tr>
+        <td><a href="/api/projects/list-projects">Listar proyectos</a></td>
+        <td>Cualquiera puede listar los proyectos (sin la propiedad balance)</td>
+        <td>GET /api/projects/list-projects</td>
+        <td>$everyone, $unauthenticated, $authenticated</td>
+        <td>Guest, team member, owner, administrator</td>
+        <td>Este entdpoint es un metodo remoto con ACL estatico, permite el acceso a todos los usuarios
+            (Incluyendo el role $everyone)</td>
+      </tr>
+      <tr>
+        <td><a href="/api/projects<% if (typeof accessToken !== 'undefined') {
+            %>?access_token=<%= accessToken %><% } %>">Ver todos los proyectos</a></td>
+        <td>Solo los administradores pueden ver todos los proyectos</td>
+        <td>GET /api/projects</td>
+        <td>admin</td>
+        <td>Administrator</td>
+        <td>Este REST endpoint es generado usando `slc loopback:model`. Creamos un role customizado llamado
+          "admin" y un role mapping para que Bob sea "admin". Despues se aplica los ACL para restringir el acceso 
+          a solo "admins" usando `slc loopback:acl`.</td>
+      </tr>
+      <tr>
+        <td><a href="/api/projects/1<% if (typeof accessToken !== 'undefined')
+            { %>?access_token=<%= accessToken %><% } %>">Mostrar balance para el proyecto 1</a></td>
+        <td>Mostrar todos los campos para el proyecto 1</td>
+        <td>GET /api/projects/1</td>
+        <td>teamMember, $owner</td>
+        <td>Team member, owner</td>
+        <td>Se registra un role resolver y se usa el access token para ver si la solicitud es
+          de un team member y proveer o denegar acceso.</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/api/projects/donate<% if (typeof accessToken !==
+              'undefined') { %>?access_token=<%= accessToken %><% } %>"
+              method="post">
+            <label for="amount">Donate</h2>
+            <input type="hidden" name="id" value="1">
+            <input type="text" name="amount" value="100">
+            <input type="submit" value="Submit">
+          </form>
+        </td>
+        <td>Donar dinero (default $100) al proyecto 1</td>
+        <td>POST /api/projects/donate</td>
+        <td>$authenticated</td>
+        <td>Team member, owner, admin</td>
+        <td>metodo remoto que toma un argumento (el monto de dinero a donar).
+          Se añade un ACL que permite el acceso a solo un usuario autenticado.</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/api/projects/withdraw<% if (typeof accessToken !==
+            'undefined') { %>?access_token=<%= accessToken %><% } %>"
+            method="post">
+            <label for="amount">Withdraw</h2>
+            <input type="hidden" name="id" value="1">
+            <input type="text" name="amount" value="100">
+            <input type="submit" value="Submit">
+          </form>
+        </td>
+        <td>Retirar dinero (default $100) de proyecto 1</td>
+        <td>POST /api/projects/withdraw</td>
+        <td>$owner</td>
+        <td>owner</td>
+        <td>Otro metodo remoto similar a donate, pero retira dinero de la cuenta en ves de añadirlo.
+          Solo el dueño del proyecto puede retirar dinero.
+        </td>
+      </tr>
+      <tr>
+        <td colspan=6><a href="/logout<% if (typeof accessToken !==
+            'undefined') { %>?access_token=<%= accessToken %><% } %>">Log
+            out</a></td>
+      </tr>
+    </table>
+  </body>
+</html>
